@@ -5,6 +5,7 @@ import SessionStore from './sessionStore';
 import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import TeacherStore from './teacherStore';
+import CourseStore from './courseStore';
 
 export default function initializeStores() {
   return {
@@ -15,6 +16,7 @@ export default function initializeStores() {
     sessionStore: new SessionStore(),
     accountStore: new AccountStore(),
     teacherStore: new TeacherStore(),
+    courseStore: new CourseStore(),
 
   };
 }

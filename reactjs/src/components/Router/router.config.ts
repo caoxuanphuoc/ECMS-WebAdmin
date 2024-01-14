@@ -1,7 +1,8 @@
 import LoadableComponent from './../Loadable/index';
 import {
   HomeOutlined, UserOutlined, TagsOutlined, AppstoreOutlined, InfoCircleOutlined,
-  SolutionOutlined
+  SolutionOutlined,
+  BookOutlined
 } from '@ant-design/icons';
 
 export const userRouter: any = [
@@ -88,6 +89,16 @@ export const appRouters: any = [
     component: LoadableComponent(() => import('../../scenes/Roles')),
   },
   {
+    path: '/courses',
+    permission: 'Pages.Users',
+    title: 'Courses',
+    name: 'course',
+    icon: BookOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Courses')),
+  },
+  //Quản lý người dùng
+  {
     //path: '/teachers',
     permission: 'Pages.Users',
     title: 'Quản lý người dùng',
@@ -115,6 +126,16 @@ export const appRouters: any = [
         component: LoadableComponent(() => import('../../scenes/Users')),
       }
     ]
+  },
+  // Khóa học
+  {
+    path: '/courses',
+    permission: 'Pages.Users',
+    title: 'Courses',
+    name: 'course',
+    icon: BookOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Courses')),
   },
   {
     path: '/tenants',
