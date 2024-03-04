@@ -70,11 +70,13 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
 
     setTimeout(() => {
       if (entityDto.id !== 0) {
-        this.formRef.current?.setFieldsValue({
+        let x= this.formRef.current?.setFieldsValue({
           ...this.props.tenantStore.tenantModel,
         });
+        console.log(x)
       } else {
-        this.formRef.current?.resetFields();
+       let x2= this.formRef.current?.resetFields();
+        console.log(x2)
       }
     }, 100);
   }
@@ -90,20 +92,36 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
     });
   }
 
+  // handleCreated = async () => {
+  //   this.formRef.current?.validateFields().then(async (values: any) => {
+  //     if (this.state.tenantId === 0) {
+  //       await this.props.tenantStore.create(values);
+  //     } else {
+  //       await this.props.tenantStore.update({ id: this.state.tenantId, ...values });
+  //     }
+
+  //     await this.getAll();
+  //     this.setState({ modalVisible: false });
+  //     this.formRef.current?.resetFields();
+  //   });
+  // };
   handleCreate = async () => {
-    this.formRef.current?.validateFields().then(async (values: any) => {
+    const validationResult = await this.formRef.current?.validateFields();
+    if (validationResult) {
+      const values = validationResult.values;
+  
       if (this.state.tenantId === 0) {
         await this.props.tenantStore.create(values);
       } else {
         await this.props.tenantStore.update({ id: this.state.tenantId, ...values });
       }
-
+  
       await this.getAll();
       this.setState({ modalVisible: false });
-      this.formRef.current?.resetFields();
-    });
+//      this.formRef.current?.resetFields();
+    }
   };
-
+  
   handleSearch = (value: string) => {
     this.setState({ filter: value }, async () => await this.getAll());
   };

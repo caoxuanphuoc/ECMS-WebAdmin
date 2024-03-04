@@ -71,10 +71,11 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
     this.Modal();
 
     setTimeout(() => {
-      this.formRef.current?.setFieldsValue({
+      let x = this.formRef.current?.setFieldsValue({
         ...this.props.roleStore.roleEdit.role,
         grantedPermissions: this.props.roleStore.roleEdit.grantedPermissionNames,
       });
+      console.log(x);
     }, 100);
   }
 

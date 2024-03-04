@@ -76,7 +76,8 @@ class Course extends AppComponentBase<ICourseProps, ICourseState> {
     this.Modal();
 
     setTimeout(() => {
-      this.formRef.current?.setFieldsValue({ ...this.props.courseStore.editCourse });
+      let x = this.formRef.current?.setFieldsValue({ ...this.props.courseStore.editCourse });
+      console.log(x);
     }, 100);
   }
 
@@ -226,7 +227,7 @@ class Course extends AppComponentBase<ICourseProps, ICourseState> {
             this.setState({
               modalVisible: false,
             });
-            this.formRef.current?.resetFields();
+            //this.formRef.current?.resetFields();
           }}
           modalType={this.state.courseId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}

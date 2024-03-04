@@ -69,9 +69,10 @@ class User extends AppComponentBase<IUserProps, IUserState> {
 
     this.setState({ userId: entityDto.id });
     this.Modal();
-
+    const model = this.props.userStore.editUser
     setTimeout(() => {
-      this.formRef.current?.setFieldsValue({ ...this.props.userStore.editUser });
+      let x= this.formRef.current?.setFieldsValue({ ...model});
+      console.log(x);
     }, 100);
   }
 
@@ -202,7 +203,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
             this.setState({
               modalVisible: false,
             });
-            this.formRef.current?.resetFields();
+            //this.formRef.current?.resetFields();
           }}
           modalType={this.state.userId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}

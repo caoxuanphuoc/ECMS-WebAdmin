@@ -83,9 +83,10 @@ class Teacher extends AppComponentBase<ITeacherProps, ITeacherState> {
     });
     this.Modal();
     setTimeout(() => {
-      this.formRef.current?.setFieldsValue({
+      let x = this.formRef.current?.setFieldsValue({
         ...this.props.teacherStore.editTeacher,
       });
+      console.log(x)
     }, 100);
   }
 
@@ -260,7 +261,8 @@ class Teacher extends AppComponentBase<ITeacherProps, ITeacherState> {
             this.setState({
               modalVisible: false,
             });
-            this.formRef.current?.resetFields();
+            let x= this.formRef.current?.resetFields();
+            console.log(x)
           }}
           modalType={this.state.teacherId === 0 ? 'create' : 'edit'}
           onCreate={this.handleCreate}
