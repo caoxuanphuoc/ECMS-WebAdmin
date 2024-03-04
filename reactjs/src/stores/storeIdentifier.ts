@@ -5,4 +5,7 @@ export default class Stores {
   static UserStore: string = 'userStore';
   static SessionStore: string = 'sessionStore';
   static AccountStore: string = 'accountStore';
+  static TeacherStore = 'teacherStore';
+  static CourseStore = 'courseStore';
+
 }

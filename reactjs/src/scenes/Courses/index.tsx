@@ -1,42 +1,40 @@
-import * as React from 'react';
-
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
 import { inject, observer } from 'mobx-react';
-
+import React from 'react';
+import { FormInstance } from 'antd/lib/form';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table } from 'antd';
+import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import CourseStore from '../../stores/courseStore';
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateUser from './components/createOrUpdateUser';
+import Stores from '../../stores/storeIdentifier';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
-import Stores from '../../stores/storeIdentifier';
-import UserStore from '../../stores/userStore';
-import { FormInstance } from 'antd/lib/form';
-import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import CreateOrUpdateCourse from './components/createOrUpdateCourse';
 
-export interface IUserProps {
-  userStore: UserStore;
+export interface ICourseProps {
+  courseStore: CourseStore;
 }
 
-export interface IUserState {
+export interface ICourseState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  userId: number;
+  courseId: number;
   filter: string;
 }
 
-const confirm = Modal.confirm;
-const Search = Input.Search;
+const { confirm } = Modal;
+const { Search } = Input;
 
-@inject(Stores.UserStore)
+@inject(Stores.CourseStore)
 @observer
-class User extends AppComponentBase<IUserProps, IUserState> {
+class Course extends AppComponentBase<ICourseProps, ICourseState> {
   formRef = React.createRef<FormInstance>();
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    userId: 0,
+    courseId: 0,
     filter: '',
   };
 
@@ -45,11 +43,20 @@ class User extends AppComponentBase<IUserProps, IUserState> {
   }
 
   async getAll() {
-    await this.props.userStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.courseStore.getAll({
+      maxResultCount: this.state.maxResultCount,
+      skipCount: this.state.skipCount,
+      keyword: this.state.filter,
+    });
   }
 
   handleTableChange = (pagination: any) => {
-    this.setState({ skipCount: (pagination.current - 1) * this.state.maxResultCount! }, async () => await this.getAll());
+    this.setState(
+      {
+        skipCount: (pagination.current - 1) * this.state.maxResultCount,
+      },
+      async () => await this.getAll()
+    );
   };
 
   Modal = () => {
@@ -60,18 +67,16 @@ class User extends AppComponentBase<IUserProps, IUserState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      await this.props.userStore.createUser();
-      await this.props.userStore.getRoles();
+      await this.props.courseStore.createCourse();
     } else {
-      await this.props.userStore.get(entityDto);
-      await this.props.userStore.getRoles();
+      await this.props.courseStore.get(entityDto);
     }
 
-    this.setState({ userId: entityDto.id });
+    this.setState({ courseId: entityDto.id });
     this.Modal();
-    const model = this.props.userStore.editUser
+
     setTimeout(() => {
-      let x= this.formRef.current?.setFieldsValue({ ...model});
+      let x = this.formRef.current?.setFieldsValue({ ...this.props.courseStore.editCourse });
       console.log(x);
     }, 100);
   }
@@ -79,12 +84,9 @@ class User extends AppComponentBase<IUserProps, IUserState> {
   delete(input: EntityDto) {
     const self = this;
     confirm({
-      title: 'Do you Want to delete these items?',
+      title: 'Do you want to delete these items?',
       onOk() {
-        self.props.userStore.delete(input);
-      },
-      onCancel() {
-        console.log('Cancel');
+        self.props.courseStore.delete(input);
       },
     });
   }
@@ -93,10 +95,10 @@ class User extends AppComponentBase<IUserProps, IUserState> {
     const form = this.formRef.current;
 
     form!.validateFields().then(async (values: any) => {
-      if (this.state.userId === 0) {
-        await this.props.userStore.create(values);
+      if (this.state.courseId === 0) {
+        await this.props.courseStore.create(values);
       } else {
-        await this.props.userStore.update({ ...values, id: this.state.userId });
+        await this.props.courseStore.update({ ...values, id: this.state.courseId });
       }
 
       await this.getAll();
@@ -110,17 +112,28 @@ class User extends AppComponentBase<IUserProps, IUserState> {
   };
 
   public render() {
-    const { users } = this.props.userStore;
+    const { courses } = this.props.courseStore;
     const columns = [
-      { title: L('UserName'), dataIndex: 'userName', key: 'userName', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('FullName'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('EmailAddress'), dataIndex: 'emailAddress', key: 'emailAddress', width: 150, render: (text: string) => <div>{text}</div> },
       {
-        title: L('IsActive'),
-        dataIndex: 'isActive',
-        key: 'isActive',
-        width: 150,
-        render: (text: boolean) => (text === true ? <Tag color="#2db7f5">{L('Yes')}</Tag> : <Tag color="red">{L('No')}</Tag>),
+        title: L('courseName'),
+        dataIndex: 'courseName',
+        key: 'courseName',
+        with: 350,
+        render: (text: string) => <div>{text}</div>,
+      },
+      {
+        title: L('courseFee'),
+        dataIndex: 'courseFee',
+        key: 'courseFee',
+        with: 350,
+        render: (text: string) => <div>{text}</div>,
+      },
+      {
+        title: L('quantity'),
+        dataIndex: 'quantity',
+        key: 'quantity',
+        with: 150,
+        render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('Actions'),
@@ -131,7 +144,9 @@ class User extends AppComponentBase<IUserProps, IUserState> {
               trigger={['click']}
               overlay={
                 <Menu>
-                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>{L('Edit')}</Menu.Item>
+                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
+                    {L('Edit')}
+                  </Menu.Item>
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -158,7 +173,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
             xxl={{ span: 2, offset: 0 }}
           >
             {' '}
-            <h2>{L('Users')}</h2>
+            <h2>{L('Courses')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -168,7 +183,12 @@ class User extends AppComponentBase<IUserProps, IUserState> {
             xl={{ span: 1, offset: 21 }}
             xxl={{ span: 1, offset: 21 }}
           >
-            <Button type="primary" shape="circle" icon={<PlusOutlined />} onClick={() => this.createOrUpdateModalOpen({ id: 0 })} />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              onClick={() => this.createOrUpdateModalOpen({ id: 0 })}
+            />
           </Col>
         </Row>
         <Row>
@@ -187,16 +207,20 @@ class User extends AppComponentBase<IUserProps, IUserState> {
           >
             <Table
               rowKey={(record) => record.id.toString()}
-              bordered={true}
+              bordered
               columns={columns}
-              pagination={{ pageSize: 10, total: users === undefined ? 0 : users.totalCount, defaultCurrent: 1 }}
-              loading={users === undefined ? true : false}
-              dataSource={users === undefined ? [] : users.items}
+              pagination={{
+                pageSize: 10,
+                total: courses === undefined ? 0 : courses.totalCount,
+                defaultCurrent: 1,
+              }}
+              loading={courses === undefined ? true : false}
+              dataSource={courses === undefined ? [] : courses.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-        <CreateOrUpdateUser
+        <CreateOrUpdateCourse
           formRef={this.formRef}
           visible={this.state.modalVisible}
           onCancel={() => {
@@ -205,13 +229,12 @@ class User extends AppComponentBase<IUserProps, IUserState> {
             });
             //this.formRef.current?.resetFields();
           }}
-          modalType={this.state.userId === 0 ? 'edit' : 'create'}
+          modalType={this.state.courseId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
-          roles={this.props.userStore.roles}
         />
       </Card>
     );
   }
 }
 
-export default User;
+export default Course;

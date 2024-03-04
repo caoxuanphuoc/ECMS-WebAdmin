@@ -3,6 +3,11 @@
 The React.js integration for ABP Boilerplate framework. This template is built on React+Mobx+Typescript. SOLID, SoC principles are used.
 
 ![](_screenshots/dashboard.png)
+# Tạo mới một màn hình
+ Step 1: Tạo một service 
+ Step 2: Định nghĩa service trong store và trong file storeIdentifier
+ Step 3: Định nghĩa lại Scenes
+ Step 4: ĐỊnh nghĩa lại route trong src/components Router/router.config.ts
 
 ## Getting Started
 
