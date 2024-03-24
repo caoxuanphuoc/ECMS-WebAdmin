@@ -7,5 +7,6 @@ export default class Stores {
   static AccountStore: string = 'accountStore';
   static TeacherStore = 'teacherStore';
   static CourseStore = 'courseStore';
+  static RoomStore = 'roomStore';
 
 }

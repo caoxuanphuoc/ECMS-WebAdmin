@@ -6,6 +6,7 @@ import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import TeacherStore from './teacherStore';
 import CourseStore from './courseStore';
+import RoomStore from './roomStore';
 
 export default function initializeStores() {
   return {
@@ -17,6 +18,7 @@ export default function initializeStores() {
     accountStore: new AccountStore(),
     teacherStore: new TeacherStore(),
     courseStore: new CourseStore(),
+    roomStore: new RoomStore(),
 
   };
 }
