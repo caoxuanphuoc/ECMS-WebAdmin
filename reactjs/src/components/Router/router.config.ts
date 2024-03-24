@@ -2,7 +2,9 @@ import LoadableComponent from './../Loadable/index';
 import {
   HomeOutlined, UserOutlined, TagsOutlined, AppstoreOutlined, InfoCircleOutlined,
   SolutionOutlined,
-  BookOutlined
+  BookOutlined,
+  CalendarOutlined,
+  ReadOutlined
 } from '@ant-design/icons';
 
 export const userRouter: any = [
@@ -51,6 +53,24 @@ export const appRouters: any = [
     icon: UserOutlined,
     showInMenu: false,
     component: LoadableComponent(() => import('../../scenes/Users')),
+  },
+  {
+    path: '/classes',
+    permission: 'Pages.Users',
+    title: 'Classes',
+    name: 'class',
+    icon: ReadOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Classes')),
+  },
+  {
+    path: '/schedule',
+    Permissions: 'Pages.Users',
+    title: 'Schedules',
+    name: 'schedule',
+    icon: CalendarOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Schedules')),
   },
   {
     path: '/teachers',
@@ -103,7 +123,7 @@ export const appRouters: any = [
     title: 'Courses',
     name: 'course',
     icon: BookOutlined,
-    showInMenu: true,
+    showInMenu: false,
     component: LoadableComponent(() => import('../../scenes/Courses')),
   },
   //Quản lý người dùng
@@ -152,7 +172,7 @@ export const appRouters: any = [
     title: 'Tenants',
     name: 'tenant',
     icon: AppstoreOutlined,
-    showInMenu: true,
+    showInMenu: false,
     component: LoadableComponent(() => import('../../scenes/Tenants')),
   },
   {

@@ -1,3 +1,4 @@
+
 export interface GetAllPermissionsOutput {
   name: string;
   displayName: string;

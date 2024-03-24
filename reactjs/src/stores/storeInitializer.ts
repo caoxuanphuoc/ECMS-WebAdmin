@@ -6,6 +6,8 @@ import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import TeacherStore from './teacherStore';
 import CourseStore from './courseStore';
+import ClassStore from './classStore';
+import ScheduleStore from './scheduleStore';
 import RoomStore from './roomStore';
 
 export default function initializeStores() {
@@ -18,6 +20,8 @@ export default function initializeStores() {
     accountStore: new AccountStore(),
     teacherStore: new TeacherStore(),
     courseStore: new CourseStore(),
+    classStore: new ClassStore(),
+    scheduleStore: new ScheduleStore(),
     roomStore: new RoomStore(),
 
   };
