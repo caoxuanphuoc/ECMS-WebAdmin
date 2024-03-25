@@ -182,10 +182,10 @@ class CreateOrUpdateClass extends React.Component<
             </Col>
             <Col span={12}>
               <Form.Item
-                label={L('LimitStudent')}
+                label={L('ClassName')}
                 {...formItemLayout}
-                name="limitStudent"
-                rules={rules.limitStudent}
+                name="className"
+                rules={rules.className}
               >
                 <Input />
               </Form.Item>
@@ -325,6 +325,15 @@ class CreateOrUpdateClass extends React.Component<
                 valuePropName="checked"
               >
                 <Checkbox></Checkbox>
+              </Form.Item>
+            </Col><Col span={12}>
+              <Form.Item
+                label={L('LimitStudent')}
+                {...formItemLayout}
+                name="limitStudent"
+                rules={rules.limitStudent}
+              >
+                <Input />
               </Form.Item>
             </Col>
           </Row>

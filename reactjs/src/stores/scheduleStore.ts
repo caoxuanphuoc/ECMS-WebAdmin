@@ -48,6 +48,7 @@ class ScheduleStore {
     this.editSchedule = {
       id: 0,
       class: {
+        className: "",
         id: 0,
         code: 'string',
         course: {

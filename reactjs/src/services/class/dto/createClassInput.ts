@@ -1,6 +1,7 @@
 import { WorkShiftDto } from '../../schedule/dto/workShiftDto';
 
 export interface CreateClassInput {
+  className: string;
   code: string;
   courseId: number;
   roomId: number;

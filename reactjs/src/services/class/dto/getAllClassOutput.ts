@@ -3,6 +3,7 @@ import { GetRoomOutput } from '../../room/dto/getRoomOutput';
 import { WorkShiftDto } from '../../schedule/dto/workShiftDto';
 
 export interface GetAllClassOuput {
+  className: string;
   code: string;
   course: GetCourseOutput;
   room: GetRoomOutput;
@@ -14,4 +15,5 @@ export interface GetAllClassOuput {
   isActive: boolean;
   lsWorkSheet: WorkShiftDto[];
   id: number;
+  numberSchedule: number;
 }

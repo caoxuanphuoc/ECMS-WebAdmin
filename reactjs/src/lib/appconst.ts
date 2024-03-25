@@ -3,7 +3,7 @@ const AppConsts = {
     defaultAdminUserName: 'admin',
   },
   localization: {
-    defaultLocalizationSourceName: 'EMS',
+    defaultLocalizationSourceName: 'ECMS',
   },
   authorization: {
     encrptedAuthTokenName: 'enc_auth_token',

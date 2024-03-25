@@ -3,6 +3,7 @@ import { GetRoomOutput } from '../../room/dto/getRoomOutput';
 import { WorkShiftDto } from '../../schedule/dto/workShiftDto';
 
 export interface UpdateClassOutput {
+  className: string;
   code: string;
   course: GetCourseOutput;
   room: GetRoomOutput;

@@ -171,6 +171,20 @@ class ClassRoom extends AppComponentBase<IClassProps, IClassState> {
         render: (text: string) => <div>{text}</div>,
       },
       {
+        title: L('Class Name'),
+        dataIndex: 'className',
+        key: 'classname',
+        with: 150,
+        render: (text: string) => <div>{text}</div>,
+      },
+      {
+        title: L('Number schedule'),
+        dataIndex: 'numberSchedule',
+        key: 'numberSchedule',
+        with: 150,
+        render: (text: string) => <div>{text}</div>,
+      },
+      {
         title: L('StartDate'),
         dataIndex: 'startDate',
         key: 'startDate',
